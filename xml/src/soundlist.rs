@@ -32,8 +32,8 @@ pub struct Sound {
     pub artist: Option<String>,
     #[serde(with = "iso8601")]
     pub added_on: Date,
-    #[serde(with = "iso8601")]
-    pub last_played_on: Date,
+    #[serde(with = "iso8601_opt")]
+    pub last_played_on: Option<Date>,
     pub play_count: u64,
 }
 
@@ -60,7 +60,7 @@ mod tests {
     fn date_field() {
         let sounds = get_sounds();
         assert_eq!(
-            Date::from_calendar_date(2022, time::Month::November, 27).unwrap(),
+            Option::Some(Date::from_calendar_date(2022, time::Month::November, 27).unwrap()),
             sounds[3].last_played_on
         )
     }
@@ -91,6 +91,23 @@ mod duration {
     }
 }
 
+mod iso8601_opt {
+
+    use super::*;
+
+    pub fn deserialize<'de, D>(deserializer: D) -> Result<Option<Date>, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
+        let res = iso8601::deserialize(deserializer);
+        if let Err(_) = res {
+            return Result::Ok(Option::None);
+        }
+        
+        return Result::Ok(Option::Some(res.unwrap()));
+    }
+}
+
 mod iso8601 {
     use time::Month;
 
@@ -101,6 +118,7 @@ mod iso8601 {
         D: serde::Deserializer<'de>,
     {
         let s = String::deserialize(deserializer)?;
+        println!("received: {s}");
         let mut date_parts = s.split('-');
         let year = date_parts.next().parse_or_default();
         let month: u8 = date_parts.next().parse_or_default();
@@ -120,7 +138,7 @@ mod iso8601 {
             _ => {
                 return Err(D::Error::invalid_value(
                     Unexpected::Unsigned(month as u64),
-                    &"a month between 1 and 12",
+                    &"a month?? between 1 and 12",
                 ))
             }
         };
