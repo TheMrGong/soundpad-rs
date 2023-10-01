@@ -118,7 +118,6 @@ mod iso8601 {
         D: serde::Deserializer<'de>,
     {
         let s = String::deserialize(deserializer)?;
-        println!("received: {s}");
         let mut date_parts = s.split('-');
         let year = date_parts.next().parse_or_default();
         let month: u8 = date_parts.next().parse_or_default();
