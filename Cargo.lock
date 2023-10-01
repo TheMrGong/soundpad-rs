@@ -1344,7 +1344,7 @@ dependencies = [
  "tokio",
  "tracing",
  "tracing-error",
- "windows-sys 0.42.0",
+ "windows-sys 0.48.0",
 ]
 
 [[package]]
