@@ -58,10 +58,18 @@ impl Client {
 
     #[instrument]
     pub async fn play_sound(&self, sound: &Sound) -> Result<()> {
-        let msg = format!("DoPlaySound({})", sound.index);
+        self.play_sound_with_cooldown(sound, true).await
+    }
 
-        let _ = Command::new(msg.clone())
-            .with_cooldown(self.debounce + sound.duration)
+    #[instrument]
+    pub async fn play_sound_with_cooldown(&self, sound: &Sound, with_cooldown: bool) -> Result<()> {
+        let msg = format!("DoPlaySound({})", sound.index);
+        let mut command = Command::new(msg.clone());
+        if with_cooldown {
+            command = command.with_cooldown(self.debounce + sound.duration);
+        }
+
+        let _ = command
             .issue::<SuccessCode, _>(self)
             .await?;
 
