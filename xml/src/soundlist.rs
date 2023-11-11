@@ -103,7 +103,7 @@ mod iso8601_opt {
         if let Err(_) = res {
             return Result::Ok(Option::None);
         }
-        
+
         return Result::Ok(Option::Some(res.unwrap()));
     }
 }
@@ -154,7 +154,7 @@ mod iso8601 {
     }
 }
 
-mod empty_string_as_none {
+pub(crate) mod empty_string_as_none {
     use super::*;
 
     pub fn deserialize<'de, D>(deserializer: D) -> Result<Option<String>, D::Error>

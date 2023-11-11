@@ -1,8 +1,8 @@
-use std::net::SocketAddr;
 use clap::Parser;
 use color_eyre::eyre::Result;
 use play::play;
 use soundpad_remote_client::ClientBuilder;
+use std::net::SocketAddr;
 use tracing::{info, metadata::LevelFilter};
 use tracing_error::ErrorLayer;
 use tracing_subscriber::{fmt::format, prelude::*};

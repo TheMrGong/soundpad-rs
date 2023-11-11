@@ -69,9 +69,7 @@ impl Client {
             command = command.with_cooldown(self.debounce + sound.duration);
         }
 
-        let _ = command
-            .issue::<SuccessCode, _>(self)
-            .await?;
+        let _ = command.issue::<SuccessCode, _>(self).await?;
 
         info!("{}", sound.title);
 
