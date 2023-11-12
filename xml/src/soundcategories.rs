@@ -55,7 +55,7 @@ pub enum SoundOrCategory {
 
 #[derive(Deserialize, Debug, Clone)]
 pub struct Sound {
-
+    pub url: String
 }
 #[derive(Deserialize, Debug, Clone)]
 pub struct Hotbar {
