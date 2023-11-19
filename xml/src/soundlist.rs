@@ -20,7 +20,7 @@ impl FromStr for SoundList {
     }
 }
 
-#[derive(Deserialize, Debug, Clone)]
+#[derive(Deserialize, Debug, Clone, PartialEq, Eq)]
 #[serde(rename_all = "camelCase")]
 pub struct Sound {
     pub index: u64,

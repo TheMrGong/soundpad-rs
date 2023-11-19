@@ -1,7 +1,7 @@
 [package]
 name = "soundpad-remote-client"
 description = "A client for the Soundpad remote control interface"
-version = "0.2.2"
+version = "0.2.3"
 edition.workspace = true
 authors.workspace = true
 license.workspace = true
