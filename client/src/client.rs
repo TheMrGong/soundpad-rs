@@ -62,6 +62,14 @@ impl Client {
     }
 
     #[instrument]
+    pub async fn do_seek_ms(&self, ms: u64) -> Result<()> {
+        Command::new(format!("DoSeekMs({ms})"))
+            .issue::<SuccessCode, _>(self)
+            .await?;
+        Ok(())
+    }
+
+    #[instrument]
     pub async fn play_sound_with_cooldown(&self, sound: &Sound, with_cooldown: bool) -> Result<()> {
         let msg = format!("DoPlaySound({})", sound.index);
         let mut command = Command::new(msg.clone());
